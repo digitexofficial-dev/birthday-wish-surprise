@@ -1,12 +1,55 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import BirthdayCake from '@/components/BirthdayCake';
+import Confetti from '@/components/Confetti';
+import MessagePopup from '@/components/MessagePopup';
+import MemoriesPage from '@/components/MemoriesPage';
+import FinalPage from '@/components/FinalPage';
+
+type PageState = 'cake' | 'popup' | 'memories' | 'final';
 
 const Index = () => {
+  const [currentPage, setCurrentPage] = useState<PageState>('cake');
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleCandleBlown = () => {
+    setShowConfetti(true);
+    setTimeout(() => {
+      setShowPopup(true);
+      setCurrentPage('popup');
+    }, 1500);
+  };
+
+  const handleYesClick = () => {
+    setShowConfetti(false);
+    setShowPopup(false);
+    setCurrentPage('memories');
+  };
+
+  const handleNextToFinal = () => {
+    setCurrentPage('final');
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background overflow-hidden">
+      {/* Confetti Effect */}
+      {showConfetti && <Confetti />}
+
+      {/* Message Popup */}
+      {showPopup && currentPage === 'popup' && (
+        <MessagePopup onYes={handleYesClick} />
+      )}
+
+      {/* Pages */}
+      {currentPage === 'cake' && (
+        <BirthdayCake onCandleBlown={handleCandleBlown} />
+      )}
+
+      {currentPage === 'memories' && (
+        <MemoriesPage onNext={handleNextToFinal} />
+      )}
+
+      {currentPage === 'final' && <FinalPage />}
     </div>
   );
 };

@@ -2,95 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 340 30% 8%;
+    --foreground: 340 20% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 340 25% 12%;
+    --card-foreground: 340 20% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 340 25% 12%;
+    --popover-foreground: 340 20% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 340 80% 65%;
+    --primary-foreground: 340 30% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 340 40% 20%;
+    --secondary-foreground: 340 20% 95%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 340 30% 18%;
+    --muted-foreground: 340 15% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 90% 70%;
+    --accent-foreground: 340 30% 8%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 340 30% 25%;
+    --input: 340 30% 25%;
+    --ring: 340 80% 65%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom colors */
+    --rose: 340 80% 65%;
+    --rose-light: 340 70% 80%;
+    --rose-dark: 340 60% 45%;
+    --gold: 45 90% 70%;
+    --gold-light: 45 85% 80%;
+    --cream: 40 30% 90%;
+    --chocolate: 25 50% 25%;
+    --chocolate-light: 25 40% 35%;
+    --cherry: 350 80% 55%;
+    --candle-flame: 35 100% 60%;
+    --candle-glow: 35 100% 50%;
   }
 }
 
@@ -101,5 +58,229 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Quicksand', sans-serif;
   }
+
+  h1, h2, h3 {
+    font-family: 'Dancing Script', cursive;
+  }
+}
+
+@layer components {
+  .text-romantic {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .gradient-romantic {
+    background: linear-gradient(135deg, hsl(var(--rose)) 0%, hsl(var(--rose-dark)) 100%);
+  }
+
+  .gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
+  }
+
+  .glow-rose {
+    box-shadow: 0 0 30px hsl(var(--rose) / 0.4), 0 0 60px hsl(var(--rose) / 0.2);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.6), 0 0 40px hsl(var(--gold) / 0.3);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px hsl(var(--rose) / 0.5), 0 0 40px hsl(var(--rose) / 0.3);
+  }
+}
+
+/* Cake animations */
+@keyframes cakeLayerFall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes candleFall {
+  0% {
+    transform: translateY(-50vh);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.1) rotate(2deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(0.95) rotate(-1deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.05) rotate(1deg);
+    opacity: 0.95;
+  }
+}
+
+@keyframes flameOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5, 0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes buttonGrow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-cake-layer {
+  animation: cakeLayerFall 1s ease-out forwards;
+}
+
+.animate-candle-fall {
+  animation: candleFall 0.8s ease-out forwards;
+}
+
+.animate-flame {
+  animation: flameFlicker 0.3s ease-in-out infinite;
+}
+
+.animate-flame-out {
+  animation: flameOut 0.5s ease-out forwards;
+}
+
+.animate-pop-in {
+  animation: popIn 0.5s ease-out forwards;
+}
+
+.animate-heartbeat {
+  animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: floatUp 8s ease-in-out infinite;
+}
+
+.animate-sway {
+  animation: sway 2s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
 }
