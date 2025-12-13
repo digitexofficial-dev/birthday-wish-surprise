@@ -95,7 +95,7 @@ const FinalPage = () => {
             </h2>
             
             <p className="mt-8 text-rose-light/80 font-body text-xl max-w-md mx-auto">
-              HBD cantik, you make my life worth living.
+              Happy Birthday cantik, you make my life worth living.
               Here's to your 18th year
             </p>
           </div>
