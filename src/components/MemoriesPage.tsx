@@ -32,23 +32,27 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
   // Write your heartfelt message to your girlfriend below
   // ============================================
   const loveMessage = `
-    Haloo wkwk maafin aku ya, aku hari ini baru sempat finishing program ini, aku telat,
-    bikin kamu kecewa dan mungkin aku keliatan ga peduli, but its not true
+    Haloo wkwk maafin aku ya, aku hari ini baru sempat finishing program ini, 
+    aku telat, bikin kamu kecewa dan mungkin aku keliatan ga peduli, 
+    but its not true
+    
+    So shall I start with the speech? *Clears Throat*
 
     Happy 18th Birthday to the best thing that ever happened to me 🎂
 
     Every moment with you has been a beautiful adventure. From our first meeting to today, 
     you've filled my life with so much joy, laughter, and love.
 
-    The things you achieved, the things you have gone through this year is a lot and its awesome,
-    yeah it's a lot I know, I feel you and i'm so proud of you, cause you're amazing. The things you
-    achieved this year makes me so proud of you, banyak banget dan kamu keren banget. you successfully gone 
-    through 2025, gone through your problems like a champ. dont worry though there will be another and another 
-    next year and so on hahah, but thats life for you and its okay, i think
+    The things you achieved, the things you have gone through this year is a lot and its awesome.
+    yes it's a lot I know, I feel you and i'm so proud of you, cause you're doing amazing. 
+    There are so many things you have achieved this year and I am so proud of you, 
+    banyak banget dan kamu keren banget. you have successfully gone through 2025, 
+    gone through your problems like a real champ 👊. 
+    But thou shall worry not! there will be another one and so on
+    next year HAHAH, but thats life for you and its okay, i think
 
     don't forget to cheer up, there's more to life and more problems and joy to catch up to in the future.
-    You are my sunshine on cloudy days and my comfort in every storm, and I hope you could feel the same way
-    with me.
+    You are my sunshine on cloudy days and my comfort in every storm, and I hope you could feel the same way with me.
 
     As you turn 18, I want you to know that I'm so grateful to have you in my life. 
     You make everything better just by being you.
