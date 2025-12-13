@@ -10,20 +10,20 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
   // ============================================
   const photos = [
     {
-      url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&h=400&fit=crop",
-      caption: "Our first date 💕", // Edit this caption
+      url: "https://images.uns",
+      caption: "One of the best things that had happened to me", // Edit this caption
     },
     {
       url: "https://photos.app.goo.gl/ahu1AdkzqNEWTV9w7",
       caption: "test", // Edit this caption
     },
     {
-      url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop",
-      caption: "Adventures together 🌟", // Edit this caption
+      url: "httpsp",
+      caption: "Waktu kita makan pizza bareng", // Edit this caption
     },
     {
-      url: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400&h=400&fit=crop",
-      caption: "Making memories 💖", // Edit this caption
+      url: "ht",
+      caption: "Terakhir kali kita sempet ketemu", // Edit this caption
     },
   ];
 
@@ -32,9 +32,9 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
   // Write your heartfelt message to your girlfriend below
   // ============================================
   const loveMessage = `
-    My dearest love,
+    Haloo
 
-    Happy 19th Birthday! 🎂
+    Happy 18th Birthday 🎂
 
     Every moment with you has been a beautiful adventure. From our first meeting to today, 
     you've filled my life with so much joy, laughter, and love.
@@ -108,7 +108,7 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
             onClick={onNext}
             className="px-12 py-4 bg-gradient-to-r from-sage to-sage-dark text-primary-foreground rounded-full font-body font-semibold text-lg transition-all duration-300 hover:scale-105 glow-sage"
           >
-            Continue to Final Surprise ✨
+            👊
           </button>
         </div>
       </div>
