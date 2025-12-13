@@ -32,26 +32,40 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
   // Write your heartfelt message to your girlfriend below
   // ============================================
   const loveMessage = `
-    Haloo
+    Haloo wkwk maafin aku ya, aku hari ini baru sempat finishing program ini, aku telat,
+    bikin kamu kecewa dan mungkin aku keliatan ga peduli, but its not true
 
-    Happy 18th Birthday 🎂
+    Happy 18th Birthday to the best thing that ever happened to me 🎂
 
     Every moment with you has been a beautiful adventure. From our first meeting to today, 
     you've filled my life with so much joy, laughter, and love.
 
-    I cherish every smile you give me, every laugh we share, and every quiet moment we spend together. 
-    You are my sunshine on cloudy days and my comfort in every storm.
+    The things you achieved, the things you have gone through this year is a lot and its awesome,
+    yeah it's a lot I know, I feel you and i'm so proud of you, cause you're amazing. The things you
+    achieved this year makes me so proud of you, banyak banget dan kamu keren banget. you successfully gone 
+    through 2025, gone through your problems like a champ. dont worry though there will be another and another 
+    next year and so on hahah, but thats life for you and its okay, i think
 
-    As you turn 19, I want you to know that I'm so grateful to have you in my life. 
+    don't forget to cheer up, there's more to life and more problems and joy to catch up to in the future.
+    You are my sunshine on cloudy days and my comfort in every storm, and I hope you could feel the same way
+    with me.
+
+    As you turn 18, I want you to know that I'm so grateful to have you in my life. 
     You make everything better just by being you.
 
-    Here's to many more birthdays together, many more adventures, 
-    and a lifetime of love and happiness.
+    I'm sorry of all my actions that you don't like, wether its intentional or not. maafin aku kalau selama ini
+    I haven't been a good partner for you.
 
-    I love you more than words can say. 💕
+    Maafin aku untuk hari ini ya cantik, happiest birthday for you, wish you all the best and I love you.
+    tungguin hadiah dari aku yang nyusul kesana yaa
 
-    Forever yours,
-    [Your Name]
+    - Presented to you by me, made with typescript & css, aku udah ngerjain project ini dari lumayan lama dan begadang juga, ada 2 project 
+    lainnya yang aku kasih liat nanti dari phyton. tapi hari ini masih ada bug dan gatau kenapa ada masalah yang lain juga (nanti aku ceritain), 
+    dan foto2 kita ada di hp lamaku semua jadi aku gabisa export ke program ini :/, dan tadi ribet banget waktu mau ngeattach foto2 corrupt terus..
+
+    maafin aku ya, aku tadi juga belum sempet ngefinalisasiin ini semua. aku mungkin bakal ketiduran karena aku belum sempat istirahat
+    sama sekali dan kurang tidur banget, kabarin aku ya nanti, dari kemarin belum sempet ngobrol. 
+    aku tadi niatnya mau pura2 lupa ke kamu dan surprise gitu nanti/nanti malemnya...
   `;
   // ============================================
   // END OF EDITABLE SECTION
@@ -62,7 +76,7 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <h1 className="font-romantic text-5xl md:text-6xl text-sage-dark text-center mb-8 text-glow animate-fade-in-up">
-          Our Precious Memories
+          Happy b-day Andrarirurero
         </h1>
 
         {/* Photo Grid */}
