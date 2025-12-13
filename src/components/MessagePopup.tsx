@@ -22,7 +22,7 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
       <div className="bg-card p-8 rounded-2xl shadow-2xl text-center animate-pop-in glow-sage max-w-md mx-4">
         <div className="text-4xl mb-4">💌</div>
         <h2 className="font-romantic text-3xl text-sage-dark mb-2">
-          Yay, sekarang ada message buat kamu
+          Yay, sekarang ada message nih buat kamu
         </h2>
         <p className="text-foreground/80 mb-6 font-body">
           Mau di buka???
