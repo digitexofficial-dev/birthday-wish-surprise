@@ -8,13 +8,16 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   const [layersVisible, setLayersVisible] = useState([false, false, false]);
   const [candleVisible, setCandleVisible] = useState(false);
   const [flameOn, setFlameOn] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [blowStrength, setBlowStrength] = useState(0);
   const [micPermission, setMicPermission] = useState<'pending' | 'granted' | 'denied'>('pending');
+  const [isListening, setIsListening] = useState(false);
+  
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const animationRef = useRef<number | null>(null);
+  const isListeningRef = useRef(false);
+  const hasStartedRef = useRef(false);
 
   // Animate cake layers falling one by one
   useEffect(() => {
@@ -37,6 +40,9 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   }, []);
 
   const stopListening = useCallback(() => {
+    console.log('Stopping microphone listener');
+    isListeningRef.current = false;
+    
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
       animationRef.current = null;
@@ -49,10 +55,12 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
       audioContextRef.current.close();
       audioContextRef.current = null;
     }
+    analyserRef.current = null;
     setIsListening(false);
   }, []);
 
   const blowOutCandle = useCallback(() => {
+    console.log('Blowing out candle!');
     setFlameOn(false);
     stopListening();
     setTimeout(() => {
@@ -61,10 +69,16 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   }, [onCandleBlown, stopListening]);
 
   const startListening = useCallback(async () => {
-    if (isListening) return;
+    // Prevent multiple starts
+    if (isListeningRef.current || hasStartedRef.current) {
+      console.log('Already listening or started, skipping');
+      return;
+    }
+    
+    hasStartedRef.current = true;
+    console.log('Starting microphone listener...');
     
     try {
-      // Always get fresh stream
       const stream = await navigator.mediaDevices.getUserMedia({ 
         audio: {
           echoCancellation: false,
@@ -72,14 +86,13 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
           autoGainControl: false,
         } 
       });
+      
       streamRef.current = stream;
       setMicPermission('granted');
       
-      // Create fresh audio context
       const audioContext = new AudioContext();
       audioContextRef.current = audioContext;
       
-      // Resume audio context if suspended (browser policy)
       if (audioContext.state === 'suspended') {
         await audioContext.resume();
       }
@@ -91,40 +104,53 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
       source.connect(analyser);
       
       analyser.fftSize = 256;
-      analyser.smoothingTimeConstant = 0.3;
+      analyser.smoothingTimeConstant = 0.5;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
 
+      isListeningRef.current = true;
       setIsListening(true);
-      console.log('Microphone listening started');
+      console.log('Microphone listening started successfully');
 
       let consecutiveHighValues = 0;
 
       const checkBlow = () => {
-        if (!analyserRef.current || audioContextRef.current?.state === 'closed') {
-          console.log('Audio context closed, stopping');
+        if (!isListeningRef.current || !analyserRef.current) {
+          console.log('Listener stopped, exiting loop');
           return;
         }
         
         analyserRef.current.getByteFrequencyData(dataArray);
         
-        // Focus on lower frequencies (typical of blowing sound)
-        const lowFreqData = dataArray.slice(0, 20);
+        // Focus on lower frequencies (typical of blowing sound) - expanded range
+        const lowFreqData = dataArray.slice(0, 30);
         const average = lowFreqData.reduce((a, b) => a + b) / lowFreqData.length;
         
-        setBlowStrength(Math.min(average * 2, 100));
+        // Also check time domain for sudden changes (like blowing)
+        const timeDataArray = new Uint8Array(bufferLength);
+        analyserRef.current.getByteTimeDomainData(timeDataArray);
+        let maxAmplitude = 0;
+        for (let i = 0; i < timeDataArray.length; i++) {
+          const amplitude = Math.abs(timeDataArray[i] - 128);
+          if (amplitude > maxAmplitude) maxAmplitude = amplitude;
+        }
         
-        // Lower threshold and require consecutive high values for reliability
-        if (average > 40) {
+        const strength = Math.max(average, maxAmplitude) * 1.5;
+        setBlowStrength(Math.min(strength, 100));
+        
+        // Lower threshold for easier detection
+        if (average > 25 || maxAmplitude > 30) {
           consecutiveHighValues++;
-          console.log('Blow detected, strength:', average, 'consecutive:', consecutiveHighValues);
-          if (consecutiveHighValues >= 5) {
-            console.log('Candle blown out!');
+          if (consecutiveHighValues % 10 === 0) {
+            console.log('Blow detected, strength:', average, 'amplitude:', maxAmplitude, 'consecutive:', consecutiveHighValues);
+          }
+          if (consecutiveHighValues >= 8) {
+            console.log('Threshold reached! Blowing out candle');
             blowOutCandle();
             return;
           }
         } else {
-          consecutiveHighValues = Math.max(0, consecutiveHighValues - 1);
+          consecutiveHighValues = Math.max(0, consecutiveHighValues - 2);
         }
         
         animationRef.current = requestAnimationFrame(checkBlow);
@@ -134,17 +160,23 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
     } catch (err) {
       console.error('Microphone access denied:', err);
       setMicPermission('denied');
+      hasStartedRef.current = false;
     }
-  }, [isListening, blowOutCandle]);
+  }, [blowOutCandle]);
 
+  // Start listening when flame is on
   useEffect(() => {
-    if (flameOn && !isListening && micPermission !== 'denied') {
+    if (flameOn && !isListeningRef.current && micPermission !== 'denied') {
       startListening();
     }
+    
     return () => {
-      stopListening();
+      if (!flameOn) {
+        stopListening();
+        hasStartedRef.current = false;
+      }
     };
-  }, [flameOn, isListening, micPermission, startListening, stopListening]);
+  }, [flameOn, micPermission, startListening, stopListening]);
 
   // Manual click to blow out (fallback)
   const handleManualBlow = () => {
@@ -166,7 +198,7 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
               Microphone blocked? Click the candle to blow it out!
             </p>
           )}
-          {isListening && blowStrength > 10 && (
+          {isListening && (
             <div className="mt-2 w-48 mx-auto bg-secondary rounded-full h-2 overflow-hidden">
               <div 
                 className="bg-primary h-2 rounded-full transition-all duration-100"
