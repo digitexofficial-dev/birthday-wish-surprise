@@ -11,7 +11,7 @@ const Confetti = () => {
   }>>([]);
 
   useEffect(() => {
-    // Inject the keyframes into the document head
+    // Inject the keyframes into the document head (assuming you don't have global CSS)
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes confettiFall {
@@ -27,15 +27,17 @@ const Confetti = () => {
     `;
     document.head.appendChild(style);
 
+    // Revised: Softer, smoother pastel colors
     const colors = [
-      '#FF0', // Yellow
-      '#F00', // Red
-      '#00F', // Blue
-      '#0F0', // Green
-      '#800080', // Purple
+      'hsl(48, 93%, 73%)',  // Soft Yellow (Lemon Chiffon vibe)
+      'hsl(356, 68%, 71%)', // Soft Red/Pink (Coral Pink)
+      'hsl(204, 71%, 74%)', // Soft Blue (Sky Blue)
+      'hsl(122, 60%, 70%)', // Soft Green (Mint)
+      'hsl(266, 45%, 72%)', // Soft Purple (Lavender)
+      'hsl(180, 50%, 75%)', // Soft Cyan (Aqua)
+      'hsl(30, 80%, 70%)',  // Soft Orange (Peach)
     ];
-    
-    // Using hex codes for simplicity as the HSL variables might be undefined
+
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -47,7 +49,6 @@ const Confetti = () => {
 
     setParticles(newParticles);
     
-    // Cleanup the style tag on component unmount
     return () => {
       document.head.removeChild(style);
     };
@@ -65,6 +66,8 @@ const Confetti = () => {
             width: `${particle.size}px`,
             height: `${particle.size}px`,
             backgroundColor: particle.color,
+            // Added slight transparency for smoothness
+            opacity: 0.85, 
             borderRadius: Math.random() > 0.5 ? '50%' : '2px',
             animation: `confettiFall ${particle.duration}s ease-out ${particle.delay}s forwards`,
           }}
