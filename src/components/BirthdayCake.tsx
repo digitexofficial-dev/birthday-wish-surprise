@@ -190,7 +190,7 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
       {/* Instruction text */}
       {flameOn && (
         <div className="absolute top-8 left-0 right-0 text-center animate-fade-in-up px-4">
-          <p className="text-rose-light text-lg font-body mb-2">
+          <p className="text-sage-dark text-lg font-body mb-2">
             Surprisee, coba tiup lilinnya lewat mic 
           </p>
           {micPermission === 'denied' && (
@@ -241,44 +241,44 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
               </div>
             )}
             {/* Candle body */}
-            <div className="w-3 h-16 bg-gradient-to-b from-cream to-rose-light rounded-sm mx-auto" />
+            <div className="w-3 h-16 bg-gradient-to-b from-cream to-mint rounded-sm mx-auto" />
           </div>
         )}
 
-        {/* Layer 3 (top) - Pink */}
+        {/* Layer 3 (top) - Sage green */}
         {layersVisible[0] && (
-          <div className="animate-cake-layer">
-            <div className="w-32 h-16 bg-gradient-to-b from-rose to-rose-dark rounded-t-lg rounded-b-sm relative overflow-hidden">
-              <div className="absolute top-2 left-0 right-0 h-2 bg-rose-light/30 rounded" />
+          <div className="animate-cake-layer flex justify-center">
+            <div className="w-32 h-16 bg-gradient-to-b from-sage to-sage-dark rounded-t-lg rounded-b-sm relative overflow-hidden">
+              <div className="absolute top-2 left-0 right-0 h-2 bg-sage-light/40 rounded" />
               <div className="absolute bottom-0 left-0 right-0 h-3 bg-chocolate" />
             </div>
           </div>
         )}
 
-        {/* Layer 2 (middle) - Cream with sprinkles look */}
+        {/* Layer 2 (middle) - Cream with decorations */}
         {layersVisible[1] && (
-          <div className="animate-cake-layer">
-            <div className="w-48 h-20 bg-gradient-to-b from-cream to-rose-light/50 rounded-sm relative overflow-hidden">
-              <div className="absolute top-2 left-0 right-0 h-2 bg-gold/30 rounded" />
+          <div className="animate-cake-layer flex justify-center">
+            <div className="w-48 h-20 bg-gradient-to-b from-cream to-beige rounded-sm relative overflow-hidden">
+              <div className="absolute top-2 left-0 right-0 h-2 bg-mint/40 rounded" />
               <div className="absolute bottom-0 left-0 right-0 h-3 bg-chocolate" />
               {/* Decorative dots */}
-              <div className="absolute top-6 left-4 w-2 h-2 bg-cherry rounded-full" />
-              <div className="absolute top-8 left-12 w-2 h-2 bg-gold rounded-full" />
-              <div className="absolute top-5 right-6 w-2 h-2 bg-rose rounded-full" />
-              <div className="absolute top-10 right-14 w-2 h-2 bg-cherry rounded-full" />
+              <div className="absolute top-6 left-4 w-2 h-2 bg-sage rounded-full" />
+              <div className="absolute top-8 left-12 w-2 h-2 bg-olive rounded-full" />
+              <div className="absolute top-5 right-6 w-2 h-2 bg-leaf rounded-full" />
+              <div className="absolute top-10 right-14 w-2 h-2 bg-sage-dark rounded-full" />
             </div>
           </div>
         )}
 
-        {/* Layer 1 (bottom) - Large pink base */}
+        {/* Layer 1 (bottom) - Large beige base */}
         {layersVisible[2] && (
-          <div className="animate-cake-layer">
-            <div className="w-64 h-24 bg-gradient-to-b from-rose-light to-rose rounded-b-lg rounded-t-sm relative overflow-hidden">
-              <div className="absolute top-3 left-0 right-0 h-2 bg-cream/40 rounded" />
-              <div className="absolute top-8 left-0 right-0 h-2 bg-cream/30 rounded" />
+          <div className="animate-cake-layer flex flex-col items-center">
+            <div className="w-64 h-24 bg-gradient-to-b from-beige-light to-beige rounded-b-lg rounded-t-sm relative overflow-hidden">
+              <div className="absolute top-3 left-0 right-0 h-2 bg-sage-light/40 rounded" />
+              <div className="absolute top-8 left-0 right-0 h-2 bg-mint/30 rounded" />
             </div>
             {/* Plate */}
-            <div className="w-72 h-4 bg-gradient-to-b from-gold to-gold-light rounded-full mx-auto -mt-1" />
+            <div className="w-72 h-4 bg-gradient-to-b from-sage to-sage-light rounded-full -mt-1" />
           </div>
         )}
       </div>

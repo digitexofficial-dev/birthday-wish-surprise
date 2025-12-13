@@ -6,48 +6,59 @@
 
 @layer base {
   :root {
-    --background: 340 30% 8%;
-    --foreground: 340 20% 95%;
+    --background: 35 30% 92%;
+    --foreground: 150 25% 25%;
 
-    --card: 340 25% 12%;
-    --card-foreground: 340 20% 95%;
+    --card: 35 35% 88%;
+    --card-foreground: 150 25% 25%;
 
-    --popover: 340 25% 12%;
-    --popover-foreground: 340 20% 95%;
+    --popover: 35 35% 88%;
+    --popover-foreground: 150 25% 25%;
 
-    --primary: 340 80% 65%;
-    --primary-foreground: 340 30% 8%;
+    --primary: 150 40% 45%;
+    --primary-foreground: 35 30% 95%;
 
-    --secondary: 340 40% 20%;
-    --secondary-foreground: 340 20% 95%;
+    --secondary: 35 25% 82%;
+    --secondary-foreground: 150 25% 25%;
 
-    --muted: 340 30% 18%;
-    --muted-foreground: 340 15% 60%;
+    --muted: 35 20% 85%;
+    --muted-foreground: 150 15% 45%;
 
-    --accent: 45 90% 70%;
-    --accent-foreground: 340 30% 8%;
+    --accent: 150 35% 55%;
+    --accent-foreground: 35 30% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 340 30% 25%;
-    --input: 340 30% 25%;
-    --ring: 340 80% 65%;
+    --border: 35 20% 75%;
+    --input: 35 20% 75%;
+    --ring: 150 40% 45%;
 
     --radius: 1rem;
 
-    /* Custom colors */
+    /* Custom colors - Beige & Green theme */
+    --beige: 35 35% 85%;
+    --beige-light: 35 40% 92%;
+    --beige-dark: 35 30% 70%;
+    --sage: 150 30% 50%;
+    --sage-light: 150 35% 65%;
+    --sage-dark: 150 35% 35%;
+    --mint: 160 40% 75%;
+    --olive: 90 25% 45%;
+    --cream: 40 50% 94%;
+    --chocolate: 25 50% 30%;
+    --chocolate-light: 25 40% 40%;
+    --leaf: 120 35% 40%;
+    --candle-flame: 35 100% 60%;
+    --candle-glow: 35 100% 50%;
+    
+    /* Keep rose for final page */
     --rose: 340 80% 65%;
     --rose-light: 340 70% 80%;
     --rose-dark: 340 60% 45%;
     --gold: 45 90% 70%;
     --gold-light: 45 85% 80%;
-    --cream: 40 30% 90%;
-    --chocolate: 25 50% 25%;
-    --chocolate-light: 25 40% 35%;
     --cherry: 350 80% 55%;
-    --candle-flame: 35 100% 60%;
-    --candle-glow: 35 100% 50%;
   }
 }
 
@@ -71,12 +82,24 @@
     font-family: 'Dancing Script', cursive;
   }
 
+  .gradient-sage {
+    background: linear-gradient(135deg, hsl(var(--sage)) 0%, hsl(var(--sage-dark)) 100%);
+  }
+
+  .gradient-beige {
+    background: linear-gradient(135deg, hsl(var(--beige)) 0%, hsl(var(--beige-dark)) 100%);
+  }
+
   .gradient-romantic {
     background: linear-gradient(135deg, hsl(var(--rose)) 0%, hsl(var(--rose-dark)) 100%);
   }
 
   .gradient-gold {
     background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
+  }
+
+  .glow-sage {
+    box-shadow: 0 0 30px hsl(var(--sage) / 0.4), 0 0 60px hsl(var(--sage) / 0.2);
   }
 
   .glow-rose {
@@ -88,6 +111,10 @@
   }
 
   .text-glow {
+    text-shadow: 0 0 20px hsl(var(--sage) / 0.5), 0 0 40px hsl(var(--sage) / 0.3);
+  }
+  
+  .text-glow-rose {
     text-shadow: 0 0 20px hsl(var(--rose) / 0.5), 0 0 40px hsl(var(--rose) / 0.3);
   }
 }

@@ -61,7 +61,7 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
     <div className="min-h-screen bg-background py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <h1 className="font-romantic text-5xl md:text-6xl text-rose text-center mb-8 text-glow animate-fade-in-up">
+        <h1 className="font-romantic text-5xl md:text-6xl text-sage-dark text-center mb-8 text-glow animate-fade-in-up">
           Our Precious Memories
         </h1>
 
@@ -89,7 +89,7 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
 
         {/* Love Message */}
         <div 
-          className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-rose/20 animate-fade-in-up"
+          className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-sage/20 animate-fade-in-up"
           style={{ animationDelay: '0.8s' }}
         >
           <div className="text-center mb-6">
@@ -106,7 +106,7 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
         <div className="text-center animate-fade-in-up" style={{ animationDelay: '1s' }}>
           <button
             onClick={onNext}
-            className="px-12 py-4 bg-gradient-to-r from-rose to-rose-dark text-primary-foreground rounded-full font-body font-semibold text-lg transition-all duration-300 hover:scale-105 glow-rose"
+            className="px-12 py-4 bg-gradient-to-r from-sage to-sage-dark text-primary-foreground rounded-full font-body font-semibold text-lg transition-all duration-300 hover:scale-105 glow-sage"
           >
             Continue to Final Surprise ✨
           </button>

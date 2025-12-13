@@ -19,9 +19,9 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-40 bg-background/80 backdrop-blur-sm">
-      <div className="bg-card p-8 rounded-2xl shadow-2xl text-center animate-pop-in glow-rose max-w-md mx-4">
+      <div className="bg-card p-8 rounded-2xl shadow-2xl text-center animate-pop-in glow-sage max-w-md mx-4">
         <div className="text-4xl mb-4">💌</div>
-        <h2 className="font-romantic text-3xl text-rose mb-2">
+        <h2 className="font-romantic text-3xl text-sage-dark mb-2">
           Ada notif buat kamu
         </h2>
         <p className="text-foreground/80 mb-6 font-body">
@@ -31,7 +31,7 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
         <div className="flex gap-4 justify-center items-center relative min-h-[60px]">
           <button
             onClick={onYes}
-            className="px-8 py-3 bg-gradient-to-r from-rose to-rose-dark text-primary-foreground rounded-full font-body font-semibold transition-all duration-300 hover:shadow-lg glow-rose"
+            className="px-8 py-3 bg-gradient-to-r from-sage to-sage-dark text-primary-foreground rounded-full font-body font-semibold transition-all duration-300 hover:shadow-lg glow-sage"
             style={{ 
               transform: `scale(${yesScale})`,
               zIndex: 10,
