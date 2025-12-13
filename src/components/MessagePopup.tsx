@@ -25,7 +25,7 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
           Ada notif buat kamu
         </h2>
         <p className="text-foreground/80 mb-6 font-body">
-          Mau di buka?
+          Mau di buka???
         </p>
         
         <div className="flex gap-4 justify-center items-center relative min-h-[60px]">
@@ -37,7 +37,7 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
               zIndex: 10,
             }}
           >
-            Maw
+            Maudeh
           </button>
           
           <button
@@ -49,13 +49,13 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
               fontSize: `${Math.max(0.7, 1 - noClicks * 0.1)}rem`,
             }}
           >
-            No
+            mok, gamau
           </button>
         </div>
 
         {noClicks >= 3 && (
           <p className="mt-4 text-muted-foreground text-sm animate-fade-in-up">
-            Ayodong
+            Ayodong, masih ngambek?
           </p>
         )}
       </div>
