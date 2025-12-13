@@ -32,7 +32,6 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
       }, delay);
     });
 
-    // Show candle after all layers
     setTimeout(() => {
       setCandleVisible(true);
       setTimeout(() => setFlameOn(true), 500);
@@ -40,9 +39,7 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   }, []);
 
   const stopListening = useCallback(() => {
-    console.log('Stopping microphone listener');
     isListeningRef.current = false;
-    
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
       animationRef.current = null;
@@ -60,7 +57,6 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   }, []);
 
   const blowOutCandle = useCallback(() => {
-    console.log('Blowing out candle!');
     setFlameOn(false);
     stopListening();
     setTimeout(() => {
@@ -69,34 +65,24 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   }, [onCandleBlown, stopListening]);
 
   const startListening = useCallback(async () => {
-    if (isListeningRef.current || hasStartedRef.current) {
-      return;
-    }
+    if (isListeningRef.current || hasStartedRef.current) return;
     hasStartedRef.current = true;
     
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       setMicPermission('granted');
-      
       const audioContext = new AudioContext();
       audioContextRef.current = audioContext;
-      
-      if (audioContext.state === 'suspended') {
-        await audioContext.resume();
-      }
-      
+      if (audioContext.state === 'suspended') await audioContext.resume();
       const analyser = audioContext.createAnalyser();
       analyserRef.current = analyser;
-      
       const source = audioContext.createMediaStreamSource(stream);
       source.connect(analyser);
-      
       analyser.fftSize = 256;
       analyser.smoothingTimeConstant = 0.5;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
-
       isListeningRef.current = true;
       setIsListening(true);
 
@@ -104,12 +90,9 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
 
       const checkBlow = () => {
         if (!isListeningRef.current || !analyserRef.current) return;
-        
         analyserRef.current.getByteFrequencyData(dataArray);
-        
         const lowFreqData = dataArray.slice(0, 30);
         const average = lowFreqData.reduce((a, b) => a + b) / lowFreqData.length;
-        
         const timeDataArray = new Uint8Array(bufferLength);
         analyserRef.current.getByteTimeDomainData(timeDataArray);
         let maxAmplitude = 0;
@@ -117,10 +100,8 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
           const amplitude = Math.abs(timeDataArray[i] - 128);
           if (amplitude > maxAmplitude) maxAmplitude = amplitude;
         }
-        
         const strength = Math.max(average, maxAmplitude) * 1.5;
         setBlowStrength(Math.min(strength, 100));
-        
         if (average > 25 || maxAmplitude > 30) {
           consecutiveHighValues++;
           if (consecutiveHighValues >= 8) {
@@ -130,13 +111,10 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
         } else {
           consecutiveHighValues = Math.max(0, consecutiveHighValues - 2);
         }
-        
         animationRef.current = requestAnimationFrame(checkBlow);
       };
-      
       checkBlow();
     } catch (err) {
-      console.error('Microphone access denied:', err);
       setMicPermission('denied');
       hasStartedRef.current = false;
     }
@@ -146,7 +124,6 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
     if (flameOn && !isListeningRef.current && micPermission !== 'denied') {
       startListening();
     }
-    
     return () => {
       if (!flameOn) {
         stopListening();
@@ -161,9 +138,9 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
     }
   };
 
-  // --- Start of the return/render function ---
   return (
     <div className="flex flex-col items-center justify-center min-h-screen relative px-4">
+      {/* Instruction text (simplified colors) */}
       {flameOn && (
         <div className="absolute top-8 left-0 right-0 text-center animate-fade-in-up px-4">
           <p className="text-lg font-bold text-gray-800 mb-2">
@@ -197,7 +174,7 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
             onClick={handleManualBlow}
             title="Click to blow out"
           >
-            {/* Flame (Assuming you have global CSS for animate-flame, etc.) */}
+            {/* Flame/Smoke (Assuming CSS keyframes exist) */}
             {flameOn && (
               <div className="absolute -top-8 left-1/2 -translate-x-1/2">
                 <div 
@@ -208,44 +185,42 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
                 />
               </div>
             )}
-            {/* Smoke when blown out (This part was missing in your original snippet) */}
             {!flameOn && candleVisible && (
                <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-4 h-8">
-                 {/* Simple smoke placeholder */}
                  <div className="w-full h-full bg-gray-400 rounded-full opacity-50 animate-smoke-puff"></div>
                </div>
             )}
 
-            {/* Candle Stick (changed color slightly for aesthetic) */}
+            {/* Candle Stick */}
             <div className="w-3 h-16 bg-white border border-gray-300 rounded-sm shadow-md" />
             <div className="w-4 h-1 bg-white mx-auto shadow-sm" />
           </div>
         )}
         
-        {/* Cake Layers - STYLES CHANGED HERE */}
+        {/* Cake Layers - USING ARBITRARY VALUES FOR CHOCOLATE COLORS */}
         <div className="relative">
-          {/* Layer 3 (Bottom) */}
+          {/* Layer 3 (Bottom) - Dark Chocolate Body, Slightly Lighter Chocolate Icing */}
           <div 
-            className={`w-64 h-16 bg-[#5B3A29] rounded-t-none rounded-b-xl shadow-lg transition-all duration-700 ease-out transform ${
+            className={`w-64 h-16 bg-[#3E2723] rounded-t-none rounded-b-xl shadow-lg transition-all duration-700 ease-out transform ${ //
               layersVisible[2] ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
             }`}
           >
             {/* Icing for Layer 3 */}
-            <div className="absolute top-0 left-0 right-0 h-4 bg-[#8B5E3C] rounded-t-xl" />
+            <div className="absolute top-0 left-0 right-0 h-4 bg-[#6E5235] rounded-t-xl" /> {/* */}
           </div>
 
           {/* Layer 2 (Middle) */}
           <div 
-            className={`w-52 h-14 bg-[#5B3A29] rounded-b-xl shadow-lg mt-1 mx-auto relative transition-all duration-700 ease-out transform ${
+            className={`w-52 h-14 bg-[#3E2723] rounded-b-xl shadow-lg mt-1 mx-auto relative transition-all duration-700 ease-out transform ${
               layersVisible[1] ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
             }`}
           >
             {/* Icing for Layer 2 */}
-            <div className="absolute top-0 left-0 right-0 h-3 bg-[#8B5E3C] rounded-t-lg" />
+            <div className="absolute top-0 left-0 right-0 h-3 bg-[#6E5235] rounded-t-lg" />
             
-            {/* --- "18" Decoration Added Here --- */}
+            {/* "18" Decoration */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-4xl font-extrabold text-white font-serif tracking-tighter" style={{ textShadow: '2px 2px 0px #333' }}>
+              <span className="text-4xl font-extrabold text-white font-serif tracking-tighter" style={{ textShadow: '2px 2px 0px #1a1a1a' }}>
                 18
               </span>
             </div>
@@ -254,12 +229,12 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
 
           {/* Layer 1 (Top) */}
           <div 
-            className={`w-40 h-12 bg-[#5B3A29] rounded-b-xl shadow-lg mt-1 mx-auto relative transition-all duration-700 ease-out transform ${
+            className={`w-40 h-12 bg-[#3E2723] rounded-b-xl shadow-lg mt-1 mx-auto relative transition-all duration-700 ease-out transform ${
               layersVisible[0] ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
             }`}
           >
             {/* Icing for Layer 1 */}
-            <div className="absolute top-0 left-0 right-0 h-3 bg-[#8B5E3C] rounded-t-lg" />
+            <div className="absolute top-0 left-0 right-0 h-3 bg-[#6E5235] rounded-t-lg" />
           </div>
         </div>
       </div>
