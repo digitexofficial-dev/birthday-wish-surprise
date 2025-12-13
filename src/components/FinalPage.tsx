@@ -27,7 +27,7 @@ const FinalPage = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{ background: 'hsl(340 30% 8%)' }}>
       {/* Floating Hearts */}
       {hearts.map((heart) => (
         <div
@@ -94,7 +94,7 @@ const FinalPage = () => {
               My Love 💕
             </h2>
             
-            <p className="mt-8 text-foreground/80 font-body text-xl max-w-md mx-auto">
+            <p className="mt-8 text-rose-light/80 font-body text-xl max-w-md mx-auto">
               Thank you for being the most amazing person in my life.
               Here's to your 19th year! 🎂✨
             </p>

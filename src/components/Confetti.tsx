@@ -12,10 +12,10 @@ const Confetti = () => {
 
   useEffect(() => {
     const colors = [
-      'hsl(var(--rose))',
-      'hsl(var(--gold))',
-      'hsl(var(--rose-light))',
-      'hsl(var(--cherry))',
+      'hsl(var(--sage))',
+      'hsl(var(--mint))',
+      'hsl(var(--sage-light))',
+      'hsl(var(--beige))',
       'hsl(var(--cream))',
     ];
 
