@@ -14,7 +14,7 @@ const MemoriesPage = ({ onNext }: MemoriesPageProps) => {
       caption: "Our first date 💕", // Edit this caption
     },
     {
-      url: "https://imgur.com/a/jTNjP83",
+      url: "https://photos.app.goo.gl/ahu1AdkzqNEWTV9w7",
       caption: "test", // Edit this caption
     },
     {
