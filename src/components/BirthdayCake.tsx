@@ -64,6 +64,7 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
     if (isListening) return;
     
     try {
+      // Always get fresh stream
       const stream = await navigator.mediaDevices.getUserMedia({ 
         audio: {
           echoCancellation: false,
@@ -74,22 +75,36 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
       streamRef.current = stream;
       setMicPermission('granted');
       
-      audioContextRef.current = new AudioContext();
-      analyserRef.current = audioContextRef.current.createAnalyser();
-      const source = audioContextRef.current.createMediaStreamSource(stream);
-      source.connect(analyserRef.current);
+      // Create fresh audio context
+      const audioContext = new AudioContext();
+      audioContextRef.current = audioContext;
       
-      analyserRef.current.fftSize = 256;
-      analyserRef.current.smoothingTimeConstant = 0.3;
-      const bufferLength = analyserRef.current.frequencyBinCount;
+      // Resume audio context if suspended (browser policy)
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+      
+      const analyser = audioContext.createAnalyser();
+      analyserRef.current = analyser;
+      
+      const source = audioContext.createMediaStreamSource(stream);
+      source.connect(analyser);
+      
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.3;
+      const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
 
       setIsListening(true);
+      console.log('Microphone listening started');
 
       let consecutiveHighValues = 0;
 
       const checkBlow = () => {
-        if (!analyserRef.current) return;
+        if (!analyserRef.current || audioContextRef.current?.state === 'closed') {
+          console.log('Audio context closed, stopping');
+          return;
+        }
         
         analyserRef.current.getByteFrequencyData(dataArray);
         
@@ -102,7 +117,9 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
         // Lower threshold and require consecutive high values for reliability
         if (average > 40) {
           consecutiveHighValues++;
+          console.log('Blow detected, strength:', average, 'consecutive:', consecutiveHighValues);
           if (consecutiveHighValues >= 5) {
+            console.log('Candle blown out!');
             blowOutCandle();
             return;
           }
