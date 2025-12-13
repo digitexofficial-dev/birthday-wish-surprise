@@ -11,14 +11,31 @@ const Confetti = () => {
   }>>([]);
 
   useEffect(() => {
-    const colors = [
-      'hsl(var(--yellow))',
-      'hsl(var(--red))',
-      'hsl(var(--blue))',
-      'hsl(var(--green))',
-      'hsl(var(--purple))',
-    ];
+    // Inject the keyframes into the document head
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(1440deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
 
+    const colors = [
+      '#FF0', // Yellow
+      '#F00', // Red
+      '#00F', // Blue
+      '#0F0', // Green
+      '#800080', // Purple
+    ];
+    
+    // Using hex codes for simplicity as the HSL variables might be undefined
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -29,6 +46,11 @@ const Confetti = () => {
     }));
 
     setParticles(newParticles);
+    
+    // Cleanup the style tag on component unmount
+    return () => {
+      document.head.removeChild(style);
+    };
   }, []);
 
   return (
