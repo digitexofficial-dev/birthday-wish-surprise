@@ -69,24 +69,13 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
   }, [onCandleBlown, stopListening]);
 
   const startListening = useCallback(async () => {
-    // Prevent multiple starts
     if (isListeningRef.current || hasStartedRef.current) {
-      console.log('Already listening or started, skipping');
       return;
     }
-    
     hasStartedRef.current = true;
-    console.log('Starting microphone listener...');
     
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        audio: {
-          echoCancellation: false,
-          noiseSuppression: false,
-          autoGainControl: false,
-        } 
-      });
-      
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       setMicPermission('granted');
       
@@ -110,23 +99,17 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
 
       isListeningRef.current = true;
       setIsListening(true);
-      console.log('Microphone listening started successfully');
 
       let consecutiveHighValues = 0;
 
       const checkBlow = () => {
-        if (!isListeningRef.current || !analyserRef.current) {
-          console.log('Listener stopped, exiting loop');
-          return;
-        }
+        if (!isListeningRef.current || !analyserRef.current) return;
         
         analyserRef.current.getByteFrequencyData(dataArray);
         
-        // Focus on lower frequencies (typical of blowing sound) - expanded range
         const lowFreqData = dataArray.slice(0, 30);
         const average = lowFreqData.reduce((a, b) => a + b) / lowFreqData.length;
         
-        // Also check time domain for sudden changes (like blowing)
         const timeDataArray = new Uint8Array(bufferLength);
         analyserRef.current.getByteTimeDomainData(timeDataArray);
         let maxAmplitude = 0;
@@ -138,14 +121,9 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
         const strength = Math.max(average, maxAmplitude) * 1.5;
         setBlowStrength(Math.min(strength, 100));
         
-        // Lower threshold for easier detection
         if (average > 25 || maxAmplitude > 30) {
           consecutiveHighValues++;
-          if (consecutiveHighValues % 10 === 0) {
-            console.log('Blow detected, strength:', average, 'amplitude:', maxAmplitude, 'consecutive:', consecutiveHighValues);
-          }
           if (consecutiveHighValues >= 8) {
-            console.log('Threshold reached! Blowing out candle');
             blowOutCandle();
             return;
           }
@@ -164,7 +142,6 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
     }
   }, [blowOutCandle]);
 
-  // Start listening when flame is on
   useEffect(() => {
     if (flameOn && !isListeningRef.current && micPermission !== 'denied') {
       startListening();
@@ -178,109 +155,113 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
     };
   }, [flameOn, micPermission, startListening, stopListening]);
 
-  // Manual click to blow out (fallback)
   const handleManualBlow = () => {
     if (flameOn) {
       blowOutCandle();
     }
   };
 
+  // --- Start of the return/render function ---
   return (
     <div className="flex flex-col items-center justify-center min-h-screen relative px-4">
-      {/* Instruction text */}
       {flameOn && (
         <div className="absolute top-8 left-0 right-0 text-center animate-fade-in-up px-4">
-          <p className="text-sage-dark text-lg font-body mb-2">
-            Surprisee, coba tiup lilinnya lewat mic 
+          <p className="text-lg font-bold text-gray-800 mb-2">
+            Surprisee, coba tiup lilinnya lewat mic 🌬️
           </p>
           {micPermission === 'denied' && (
-            <p className="text-muted-foreground text-sm mb-2">
+            <p className="text-gray-600 text-sm mb-2">
               Microphone blocked? Click the candle to blow it out!
             </p>
           )}
           {isListening && (
-            <div className="mt-2 w-48 mx-auto bg-secondary rounded-full h-2 overflow-hidden">
+            <div className="mt-2 w-48 mx-auto bg-gray-300 rounded-full h-2 overflow-hidden">
               <div 
-                className="bg-primary h-2 rounded-full transition-all duration-100"
+                className="bg-red-500 h-2 rounded-full transition-all duration-100"
                 style={{ width: `${blowStrength}%` }}
               />
             </div>
           )}
           {!isListening && micPermission === 'pending' && (
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-600 text-sm">
               Please allow microphone access...
             </p>
           )}
         </div>
       )}
 
-      {/* Cake container - properly centered */}
       <div className="flex flex-col items-center">
-        {/* Candle */}
         {candleVisible && (
           <div 
             className="relative mb-0 animate-candle-fall cursor-pointer"
             onClick={handleManualBlow}
             title="Click to blow out"
           >
-            {/* Flame */}
+            {/* Flame (Assuming you have global CSS for animate-flame, etc.) */}
             {flameOn && (
               <div className="absolute -top-8 left-1/2 -translate-x-1/2">
                 <div 
-                  className="w-4 h-8 rounded-full bg-gradient-to-t from-candle-glow via-candle-flame to-gold-light animate-flame"
+                  className="w-4 h-8 rounded-full bg-yellow-400"
                   style={{
-                    boxShadow: '0 0 20px hsl(var(--candle-flame)), 0 0 40px hsl(var(--candle-glow))',
+                    boxShadow: '0 0 20px yellow, 0 0 40px orange',
                   }}
                 />
               </div>
             )}
-            {/* Smoke when blown out */}
-            {!flameOn && (
-              <div className="absolute -top-12 left-1/2 -translate-x-1/2">
-                <div className="w-2 h-8 bg-gradient-to-t from-muted-foreground/50 to-transparent rounded-full opacity-50 animate-fade-in-up" />
-              </div>
+            {/* Smoke when blown out (This part was missing in your original snippet) */}
+            {!flameOn && candleVisible && (
+               <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-4 h-8">
+                 {/* Simple smoke placeholder */}
+                 <div className="w-full h-full bg-gray-400 rounded-full opacity-50 animate-smoke-puff"></div>
+               </div>
             )}
-            {/* Candle body */}
-            <div className="w-3 h-16 bg-gradient-to-b from-cream to-mint rounded-sm mx-auto" />
-          </div>
-        )}
 
-        {/* Layer 3 (top) - Sage green */}
-        {layersVisible[0] && (
-          <div className="animate-cake-layer flex justify-center">
-            <div className="w-32 h-16 bg-gradient-to-b from-sage to-sage-dark rounded-t-lg rounded-b-sm relative overflow-hidden">
-              <div className="absolute top-2 left-0 right-0 h-2 bg-sage-light/40 rounded" />
-              <div className="absolute bottom-0 left-0 right-0 h-3 bg-chocolate" />
-            </div>
+            {/* Candle Stick (changed color slightly for aesthetic) */}
+            <div className="w-3 h-16 bg-white border border-gray-300 rounded-sm shadow-md" />
+            <div className="w-4 h-1 bg-white mx-auto shadow-sm" />
           </div>
         )}
+        
+        {/* Cake Layers - STYLES CHANGED HERE */}
+        <div className="relative">
+          {/* Layer 3 (Bottom) */}
+          <div 
+            className={`w-64 h-16 bg-[#5B3A29] rounded-t-none rounded-b-xl shadow-lg transition-all duration-700 ease-out transform ${
+              layersVisible[2] ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+            }`}
+          >
+            {/* Icing for Layer 3 */}
+            <div className="absolute top-0 left-0 right-0 h-4 bg-[#8B5E3C] rounded-t-xl" />
+          </div>
 
-        {/* Layer 2 (middle) - Cream with decorations */}
-        {layersVisible[1] && (
-          <div className="animate-cake-layer flex justify-center">
-            <div className="w-48 h-20 bg-gradient-to-b from-cream to-beige rounded-sm relative overflow-hidden">
-              <div className="absolute top-2 left-0 right-0 h-2 bg-mint/40 rounded" />
-              <div className="absolute bottom-0 left-0 right-0 h-3 bg-chocolate" />
-              {/* Decorative dots */}
-              <div className="absolute top-6 left-4 w-2 h-2 bg-sage rounded-full" />
-              <div className="absolute top-8 left-12 w-2 h-2 bg-olive rounded-full" />
-              <div className="absolute top-5 right-6 w-2 h-2 bg-leaf rounded-full" />
-              <div className="absolute top-10 right-14 w-2 h-2 bg-sage-dark rounded-full" />
+          {/* Layer 2 (Middle) */}
+          <div 
+            className={`w-52 h-14 bg-[#5B3A29] rounded-b-xl shadow-lg mt-1 mx-auto relative transition-all duration-700 ease-out transform ${
+              layersVisible[1] ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+            }`}
+          >
+            {/* Icing for Layer 2 */}
+            <div className="absolute top-0 left-0 right-0 h-3 bg-[#8B5E3C] rounded-t-lg" />
+            
+            {/* --- "18" Decoration Added Here --- */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <span className="text-4xl font-extrabold text-white font-serif tracking-tighter" style={{ textShadow: '2px 2px 0px #333' }}>
+                18
+              </span>
             </div>
+            
           </div>
-        )}
 
-        {/* Layer 1 (bottom) - Large beige base */}
-        {layersVisible[2] && (
-          <div className="animate-cake-layer flex flex-col items-center">
-            <div className="w-64 h-24 bg-gradient-to-b from-beige-light to-beige rounded-b-lg rounded-t-sm relative overflow-hidden">
-              <div className="absolute top-3 left-0 right-0 h-2 bg-sage-light/40 rounded" />
-              <div className="absolute top-8 left-0 right-0 h-2 bg-mint/30 rounded" />
-            </div>
-            {/* Plate */}
-            <div className="w-72 h-4 bg-gradient-to-b from-sage to-sage-light rounded-full -mt-1" />
+          {/* Layer 1 (Top) */}
+          <div 
+            className={`w-40 h-12 bg-[#5B3A29] rounded-b-xl shadow-lg mt-1 mx-auto relative transition-all duration-700 ease-out transform ${
+              layersVisible[0] ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+            }`}
+          >
+            {/* Icing for Layer 1 */}
+            <div className="absolute top-0 left-0 right-0 h-3 bg-[#8B5E3C] rounded-t-lg" />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
