@@ -142,7 +142,7 @@ const BirthdayCake = ({ onCandleBlown }: BirthdayCakeProps) => {
       {flameOn && (
         <div className="absolute top-8 left-0 right-0 text-center animate-fade-in-up px-4">
           <p className="text-rose-light text-lg font-body mb-2">
-            🎂 Blow into your microphone to blow out the candle! 🎂
+            Surprisee, coba tiup lilinnya lewat mic 
           </p>
           {micPermission === 'denied' && (
             <p className="text-muted-foreground text-sm mb-2">
