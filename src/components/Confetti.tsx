@@ -12,11 +12,11 @@ const Confetti = () => {
 
   useEffect(() => {
     const colors = [
-      'hsl(var(--sage))',
-      'hsl(var(--mint))',
-      'hsl(var(--sage-light))',
-      'hsl(var(--beige))',
-      'hsl(var(--cream))',
+      'hsl(var(--yellow))',
+      'hsl(var(--red))',
+      'hsl(var(--blue))',
+      'hsl(var(--green))',
+      'hsl(var(--purple))',
     ];
 
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
