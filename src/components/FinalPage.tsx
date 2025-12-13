@@ -91,12 +91,12 @@ const FinalPage = () => {
                 textShadow: '0 0 30px hsl(var(--gold) / 0.5)',
               }}
             >
-              My Love 💕
+              Andrarirurero
             </h2>
             
             <p className="mt-8 text-rose-light/80 font-body text-xl max-w-md mx-auto">
-              Thank you for being the most amazing person in my life.
-              Here's to your 19th year! 🎂✨
+              HBD cantik, you make my life worth living.
+              Here's to your 18th year
             </p>
           </div>
         )}
