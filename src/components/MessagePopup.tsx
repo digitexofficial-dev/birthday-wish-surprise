@@ -22,10 +22,10 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
       <div className="bg-card p-8 rounded-2xl shadow-2xl text-center animate-pop-in glow-rose max-w-md mx-4">
         <div className="text-4xl mb-4">💌</div>
         <h2 className="font-romantic text-3xl text-rose mb-2">
-          There's a message for you!
+          Ada notif buat kamu
         </h2>
         <p className="text-foreground/80 mb-6 font-body">
-          Do you want to open it?
+          Mau di buka?
         </p>
         
         <div className="flex gap-4 justify-center items-center relative min-h-[60px]">
@@ -37,7 +37,7 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
               zIndex: 10,
             }}
           >
-            Yes! 💕
+            Maw
           </button>
           
           <button
@@ -55,7 +55,7 @@ const MessagePopup = ({ onYes }: MessagePopupProps) => {
 
         {noClicks >= 3 && (
           <p className="mt-4 text-muted-foreground text-sm animate-fade-in-up">
-            Come on, just click yes! 😊
+            Ayodong
           </p>
         )}
       </div>
